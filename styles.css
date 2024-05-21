@@ -1,32 +1,60 @@
 body {
-  font-family: Doremon, sans-serif;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
-/* Remove default bullet points from list items */
+.container {
+  background: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  justify-content: space-between;
+}
+
+input[type="text"] {
+  width: 70%;
+  padding: 5px;
+}
+
+button {
+  padding: 5px 10px;
+}
+
 ul {
   list-style-type: none;
+  padding: 0;
 }
 
-/* Add background color to list items */
 li {
-  padding: 10px;
-  margin-bottom: 5px;
-  background-color: #f0f0f0;
-  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+li button {
+  background: none;
+  border: none;
   cursor: pointer;
 }
 
-/* Style for completed tasks */
-li.completed {
-  text-decoration: line-through;
+li button.edit {
+  color: blue;
 }
 
-/* Put some background - color (zebra stripes) */
-ul li:nth-child(odd) {
-  background: #f9f9f9;
-}
-
-/* Make the background darker on hover */
-ul li:hover{
-  background: #ddd;
+li button.delete {
+  color: red;
 }

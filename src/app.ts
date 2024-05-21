@@ -1,51 +1,62 @@
-interface Todo {
-    id: number;
-    content: string;
-    completed: boolean;
-  }
-  
-  let todos: Todo[] = [];
-  let todoId = 0;
-  
-  const todoInput = document.getElementById('todo-input') as HTMLInputElement;
-  const addTodoButton = document.getElementById('add-todo') as HTMLButtonElement;
-  const todoList = document.getElementById('todo-list') as HTMLUListElement;
-  
-  function addTodo() {
-    const content = todoInput.value.trim();
-    if (content) {
-      const newTodo: Todo = {
-        id: todoId++,
-        content,
-        completed: false,
+interface Task {
+  id: number;
+  text: string;
+}
+
+let tasks: Task[] = [];
+let taskIdCounter = 0;
+
+const taskForm = document.getElementById('task-form') as HTMLFormElement;
+const taskInput = document.getElementById('task-input') as HTMLInputElement;
+const taskList = document.getElementById('task-list') as HTMLUListElement;
+
+taskForm.addEventListener('submit', addTask);
+
+function addTask(event: Event): void {
+  event.preventDefault();
+  const taskText = taskInput.value.trim();
+  if (taskText !== '') {
+      const newTask: Task = {
+          id: taskIdCounter++,
+          text: taskText,
       };
-      todos.push(newTodo);
-      renderTodos();
-      todoInput.value = '';
-    }
+      tasks.push(newTask);
+      renderTasks();
+      taskInput.value = '';
   }
-  
-  function renderTodos() {
-    todoList.innerHTML = '';
-    todos.forEach(todo => {
+}
+
+function renderTasks(): void {
+  taskList.innerHTML = '';
+  tasks.forEach(task => {
       const li = document.createElement('li');
-      li.textContent = todo.content;
-      li.addEventListener('click', () => toggleTodoCompletion(todo.id));
-      todoList.appendChild(li);
-    });
-  }
-  
-  function toggleTodoCompletion(id: number) {
-    const todo = todos.find(todo => todo.id === id);
-    if (todo) {
-      todo.completed = !todo.completed;
-      renderTodos();
-    }
-  }
-  
-  addTodoButton.addEventListener('click', addTodo);
-  todoInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      addTodo();
-    }
+      li.innerHTML = `
+          <span>${task.text}</span>
+          <div>
+              <button class="edit" onclick="editTask(${task.id})">Edit</button>
+              <button class="delete" onclick="deleteTask(${task.id})">Delete</button>
+          </div>
+      `;
+      taskList.appendChild(li);
   });
+}
+
+function editTask(id: number): void {
+  const task = tasks.find(task => task.id === id);
+  if (task) {
+      const newTaskText = prompt('Edit task:', task.text);
+      if (newTaskText !== null) {
+          task.text = newTaskText.trim();
+          renderTasks();
+      }
+  }
+}
+
+function deleteTask(id: number): void {
+  tasks = tasks.filter(task => task.id !== id);
+  renderTasks();
+}
+
+// Attach functions to window to make them accessible in inline event handlers
+(window as any).editTask = editTask;
+(window as any).deleteTask = deleteTask;
