@@ -1,3 +1,32 @@
 body {
-    font-family: Doremon, sans-serif;
-  }
+  font-family: Doremon, sans-serif;
+}
+
+/* Remove default bullet points from list items */
+ul {
+  list-style-type: none;
+}
+
+/* Add background color to list items */
+li {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #f0f0f0; /* You can adjust the color as per your preference */
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Style for completed tasks */
+li.completed {
+  text-decoration: line-through;
+}
+
+/* Put some background - color (zebra stripes) */
+ul li:nth-child(odd) {
+  background: #f9f9f9;
+}
+
+/* Make the background darker on hover */
+ul li:hover{
+  background: #ddd;
+}
